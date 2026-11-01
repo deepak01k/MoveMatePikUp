@@ -1,0 +1,24 @@
+{
+  "business": {
+    "name": "MoveMate PikUp",
+    "tagline": "Live Pickup in Bokaro & Dhanbad — Delivering Across Jharkhand, Bihar & West Bengal",
+    "phone": "+91 98765 43210",
+    "phoneRaw": "tel:+919876543210",
+    "whatsappNumber": "919876543210",
+    "whatsappDisplay": "+91 98765 43210",
+    "email": "dispatch@movematepikup.com",
+    "operatingHours": "Mon – Sun: 7:00 AM – 9:00 PM IST",
+    "livePickupHubs": [
+      "Bokaro Steel City",
+      "Dhanbad",
+      "Chas",
+      "Jharia",
+      "Katras",
+      "Govindpur",
+      "Nirsa",
+      "Bermo",
+      "Sindri"
+    ],
+    "deliveryScope": "Anywhere in Jharkhand, Bihar & West Bengal"
+  }
+}

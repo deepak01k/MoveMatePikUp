@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MoveMate PikUp - Local Transport &amp; Friction-Free Dispatch</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-surface": "#213145",
+            "surface-dim": "#cbdbf5",
+            "primary-fixed-dim": "#4edea3",
+            "tertiary-container": "#3eb686",
+            "surface-variant": "#d3e4fe",
+            "surface-container-high": "#dce9ff",
+            "on-secondary-fixed": "#131b2e",
+            "primary-container": "#10b981",
+            "on-tertiary-fixed": "#002114",
+            "tertiary-fixed-dim": "#68dba9",
+            "secondary-fixed-dim": "#bec6e0",
+            "on-tertiary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-container-highest": "#d3e4fe",
+            "primary": "#006c49",
+            "outline": "#6c7a71",
+            "on-primary": "#ffffff",
+            "surface-tint": "#006c49",
+            "primary-fixed": "#6ffbbe",
+            "on-surface": "#0b1c30",
+            "surface-container-low": "#eff4ff",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#002113",
+            "surface-container": "#e5eeff",
+            "on-surface-variant": "#3c4a42",
+            "background": "#f8f9ff",
+            "outline-variant": "#bbcabf",
+            "on-primary-container": "#00422b",
+            "on-error": "#ffffff",
+            "surface": "#f8f9ff",
+            "tertiary": "#006c4a",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#00422c",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed": "#85f8c4",
+            "on-secondary-fixed-variant": "#3f465c",
+            "secondary": "#565e74",
+            "on-primary-fixed-variant": "#005236",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#dae2fd",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#4edea3",
+            "secondary-container": "#dae2fd",
+            "inverse-on-surface": "#eaf1ff",
+            "on-background": "#0b1c30",
+            "on-secondary-container": "#5c647a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "gutter": "1rem",
+            "gutter-desktop": "2rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter-tablet": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin-desktop": "3rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin-tablet": "2rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "headline-xl-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md text-body-md selection:bg-primary selection:text-on-primary">
+<!-- Desktop TopNavBar (Anchored via Shared Components JSON) -->
+<header class="sticky top-0 w-full z-50 bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none transition-all duration-200">
+<div class="flex justify-between items-center max-w-[1200px] mx-auto px-gutter-desktop py-space-md w-full">
+<!-- Brand Logo -->
+<a class="flex items-center gap-space-sm group" href="#home">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm group-hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface tracking-tight font-extrabold leading-none">MoveMate PikUp</span>
+<span class="text-label-sm font-label-sm text-outline tracking-wider mt-0.5">LOCAL RAPID DISPATCH</span>
+</div>
+</a>
+<!-- Desktop Nav Links -->
+<nav class="hidden md:flex items-center gap-space-lg">
+<a class="border-b-2 border-primary dark:border-inverse-primary text-primary dark:text-inverse-primary font-label-lg text-label-lg pb-1" href="#home">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-label-lg text-label-lg transition-colors duration-150" href="#services">Services</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-label-lg text-label-lg transition-colors duration-150" href="#areas">Areas Served</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-label-lg text-label-lg transition-colors duration-150" href="#how-it-works">How It Works</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-label-lg text-label-lg transition-colors duration-150" href="#fleet">About</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-label-lg text-label-lg transition-colors duration-150" href="#dispatch-form">Contact</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-space-md">
+<!-- Live Dispatch Status Badge -->
+<div class="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant/60">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-on-surface">Next dispatch ~35 mins</span>
+</div>
+<!-- Call Dispatch (Secondary) -->
+<a class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container-low transition-all duration-150 text-label-md font-label-md active:scale-[0.98]" href="tel:0400123456">
+<span class="material-symbols-outlined text-outline" data-icon="call">call</span>
+<span>Call Dispatch</span>
+</a>
+<!-- WhatsApp Us (Primary Action) -->
+<a class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary-container text-on-tertiary font-label-lg text-label-lg hover:bg-primary shadow-sm hover:shadow transition-all duration-200 active:scale-[0.98]" href="https://wa.me/0400123456">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span>WhatsApp Us</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Hero Section (Expansive 2-Column Desktop Grid) -->
+<section class="relative overflow-hidden pt-space-xl pb-16 bg-surface" id="home">
+<!-- Subtle Ambient Graphic Backdrop -->
+<div class="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#bbcabf_1px,transparent_1px)] [background-size:20px_20px]"></div>
+<div class="relative max-w-[1200px] mx-auto px-gutter-desktop grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+<!-- Hero Left: High-Impact Proposition -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Top Operational Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container border border-outline-variant/80 w-fit">
+<span class="text-primary-container text-label-sm font-label-sm">⚡ ON-DEMAND LOCAL DISPATCH</span>
+<span class="text-outline text-label-sm">•</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Metro 50km Coverage</span>
+</div>
+<!-- Headline -->
+<h1 class="text-headline-xl font-headline-xl text-on-surface tracking-tight leading-tight">
+          Reliable Local Pickup &amp; Transport, Made Simple.
+        </h1>
+<!-- Subheading -->
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-xl">
+          Need furniture, appliances, or business cargo moved today? Get instant direct assistance without rental truck hassle, hidden charges, or stressful depot returns.
+        </p>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center gap-space-md pt-space-sm">
+<a class="h-[52px] px-7 inline-flex items-center justify-center gap-2 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg shadow-sm transition-all duration-200 active:scale-[0.98]" href="#dispatch-form">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span>Call Dispatch Now</span>
+</a>
+<a class="h-[52px] px-6 inline-flex items-center justify-center gap-2 rounded-lg bg-inverse-surface hover:bg-on-surface text-inverse-on-surface font-label-lg text-label-lg transition-all duration-200 active:scale-[0.98]" href="https://wa.me/0400123456">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span>Chat via WhatsApp — Avg 2 min reply</span>
+</a>
+</div>
+<!-- Trust Badges & Social Proof Strip -->
+<div class="pt-space-md border-t border-outline-variant/60 grid grid-cols-3 gap-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified">verified</span>
+</div>
+<div>
+<p class="text-headline-sm font-headline-sm text-on-surface leading-tight">4.9 / 5 Rating</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">350+ Verified Moves</p>
+</div>
+</div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="security">security</span>
+</div>
+<div>
+<p class="text-headline-sm font-headline-sm text-on-surface leading-tight">$50k Cargo Cover</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Full Transit Insurance</p>
+</div>
+</div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="badge">badge</span>
+</div>
+<div>
+<p class="text-headline-sm font-headline-sm text-on-surface leading-tight">Police Checked</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Experienced Drivers</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Hero Right: Interactive Fast Rate & Availability Estimator -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm relative">
+<!-- Estimator Header -->
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/60">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Fast Rate Calculator</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Estimate Your Move</h2>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container" data-icon="bolt">bolt</span> Instant
+            </span>
+</div>
+<!-- Estimator Form Structure -->
+<div class="space-y-4 pt-4">
+<!-- Item Category -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Cargo / Item Category</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="px-3 py-2 text-left rounded-lg border-2 border-primary bg-primary/5 text-primary text-label-sm font-label-sm flex items-center justify-between" type="button">
+<span>Couches &amp; Sofas</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+</button>
+<button class="px-3 py-2 text-left rounded-lg border border-outline-variant hover:border-outline text-on-surface-variant text-label-sm font-label-sm" type="button">
+                  Whitegoods (Fridge/Washer)
+                </button>
+<button class="px-3 py-2 text-left rounded-lg border border-outline-variant hover:border-outline text-on-surface-variant text-label-sm font-label-sm" type="button">
+                  Store Flatpack (IKEA/Bunnings)
+                </button>
+<button class="px-3 py-2 text-left rounded-lg border border-outline-variant hover:border-outline text-on-surface-variant text-label-sm font-label-sm" type="button">
+                  Pallet / Boxed Stock
+                </button>
+</div>
+</div>
+<!-- Postcodes Dual Input -->
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Pickup Postcode</label>
+<div class="relative">
+<span class="absolute left-3 top-3.5 material-symbols-outlined text-[18px] text-primary" data-icon="trip_origin">trip_origin</span>
+<input class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" type="text" value="3000 (Melbourne CBD)"/>
+</div>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Delivery Postcode</label>
+<div class="relative">
+<span class="absolute left-3 top-3.5 material-symbols-outlined text-[18px] text-error" data-icon="location_on">location_on</span>
+<input class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" type="text" value="3121 (Richmond)"/>
+</div>
+</div>
+</div>
+<!-- Loading Assistance Selection -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Loading Assistance Needed</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center gap-2 p-2.5 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-primary focus:ring-primary-container" name="driver_crew" type="radio"/>
+<div>
+<p class="text-label-md font-label-md text-on-surface leading-tight">1 Driver (Assisted)</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">You assist at pickup</p>
+</div>
+</label>
+<label class="flex items-center gap-2 p-2.5 rounded-lg border-2 border-primary bg-primary/5 cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary-container" name="driver_crew" type="radio"/>
+<div>
+<p class="text-label-md font-label-md text-on-surface leading-tight">2-Person Crew</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Full lifting done for you</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Price Output & CTA -->
+<div class="pt-3 border-t border-outline-variant/60 flex items-center justify-between">
+<div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Estimated Flat Rate</span>
+<p class="text-headline-lg font-headline-lg text-primary tracking-tight">$85 – $130</p>
+<span class="text-label-sm font-label-sm text-outline">Transparent • No depot fees</span>
+</div>
+<a class="h-11 px-5 inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-md font-label-md shadow-sm transition-all duration-150" href="#dispatch-form">
+<span>Lock in Booking</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Features Bar (Trust Strip: 4 Horizontal Highlight Cards) -->
+<section class="border-y border-outline-variant/60 bg-surface-container-lowest py-space-lg">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Same-Day Available</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Immediate rapid dispatch within 30–60 minutes across all metro bounds.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="front_loader">front_loader</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Careful Handling</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Equipped with thick quilted blankets, ratchet straps, and 500kg tail-lifts.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Transparent Flat Pricing</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Upfront confirmed quotes. Absolutely zero depot return or fuel surcharge traps.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined" data-icon="shield_person">shield_person</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Verified Local Drivers</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Insured, police-vetted transport team trained in safe urban logistics.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Tailored Services Section (4-Column Bento Card System) -->
+<section class="py-space-xl bg-surface" id="services">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider font-bold">Purpose-Built Logistics</span>
+<h2 class="text-headline-xl font-headline-xl text-on-surface mt-1">Services Tailored to Your Load</h2>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md mt-2 md:mt-0">
+          From single living room upgrades to multi-drop commercial orders, choose dedicated vehicles without paying for empty space.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<!-- Service Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-md transition-all duration-200 flex flex-col justify-between group hover:border-primary">
+<div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chair">chair</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Furniture &amp; Appliance Moves</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+              L-shape sofas, double-door refrigerators, washing machines, and king beds moved door-to-room safely.
+            </p>
+</div>
+<div>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">1 or 2 Person Loading</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">Tail-lift Available</span>
+</div>
+<a class="inline-flex items-center gap-1 text-primary text-label-md font-label-md group-hover:underline" href="#dispatch-form">
+<span>Book Furniture Move</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Service Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-md transition-all duration-200 flex flex-col justify-between group hover:border-primary">
+<div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Store Pickup &amp; Dispatch</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+              Direct collections from IKEA, Bunnings, FB Marketplace, and Gumtree with immediate dockside handover.
+            </p>
+</div>
+<div>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">Dock Pickup</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">Pre-inspection Check</span>
+</div>
+<a class="inline-flex items-center gap-1 text-primary text-label-md font-label-md group-hover:underline" href="#dispatch-form">
+<span>Schedule Store Pickup</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Service Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-md transition-all duration-200 flex flex-col justify-between group hover:border-primary">
+<div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Small Business Transport</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+              Retail warehouse transfers, event setups, market stalls, and urgent customer dispatches for local merchants.
+            </p>
+</div>
+<div>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">B2B Recurring</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">Direct Invoicing</span>
+</div>
+<a class="inline-flex items-center gap-1 text-primary text-label-md font-label-md group-hover:underline" href="#dispatch-form">
+<span>Open Business Account</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Service Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-md transition-all duration-200 flex flex-col justify-between group hover:border-primary">
+<div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="interests">interests</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Fragile &amp; Special Items</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+              Heavy mirrors, delicate glass tables, audio gear, and artworks strapped in custom protective enclosures.
+            </p>
+</div>
+<div>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">Quilted Wrap Blanket</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-label-sm font-label-sm">Max 1,000kg Rating</span>
+</div>
+<a class="inline-flex items-center gap-1 text-primary text-label-md font-label-md group-hover:underline" href="#dispatch-form">
+<span>Request Custom Wrap</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Areas Served & Interactive Postcode Checker -->
+<section class="py-space-xl bg-surface-container-low border-y border-outline-variant/60" id="areas">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+<!-- Left: Regional Overview & Postal Tool -->
+<div class="lg:col-span-6 space-y-space-md">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider font-bold">50km Active Radial Zone</span>
+<h2 class="text-headline-xl font-headline-xl text-on-surface mt-1">Broad Regional Coverage</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-2">
+            MoveMate operates continuous hub-to-hub runs connecting central business corridors and suburban growth belts every single day.
+          </p>
+</div>
+<!-- Corridors Breakdown -->
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant">
+<p class="text-label-md font-label-md text-on-surface font-bold">Inner &amp; CBD Core</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Melbourne, Richmond, Southbank, Docklands</p>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant">
+<p class="text-label-md font-label-md text-on-surface font-bold">Northern Sector</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Brunswick, Preston, Coburg, Heidelberg</p>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant">
+<p class="text-label-md font-label-md text-on-surface font-bold">Eastern Corridor</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Hawthorn, Box Hill, Ringwood, Glen Waverley</p>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant">
+<p class="text-label-md font-label-md text-on-surface font-bold">South-East &amp; Bay</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">St Kilda, Brighton, Moorabbin, Dandenong</p>
+</div>
+</div>
+<!-- Interactive Postcode Live Checker -->
+<div class="p-4 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm">
+<label class="block text-label-md font-label-md text-on-surface mb-2">Check Instant Suburb Serviceability</label>
+<div class="flex gap-2">
+<input class="flex-1 px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="Enter Suburb or Postcode (e.g. 3056)" type="text"/>
+<button class="px-5 py-2.5 rounded-lg bg-inverse-surface text-inverse-on-surface hover:bg-on-surface text-label-md font-label-md transition-colors shrink-0">
+              Check Service
+            </button>
+</div>
+<div class="mt-2 flex items-center gap-2 text-primary text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+<span>All postcodes within 50km radius have active units ready for same-day dispatch.</span>
+</div>
+</div>
+</div>
+<!-- Right: Visual Vector Logistics Map & Service Hubs -->
+<div class="lg:col-span-6">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-label-md font-label-md text-on-surface font-bold">Live Fleet Hub Deployment</span>
+<span class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-label-sm font-label-sm flex items-center gap-1 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span> 18 Drivers Active
+            </span>
+</div>
+<!-- Stylized Map Canvas Component -->
+<div class="relative w-full h-[320px] rounded-lg bg-surface-container-low border border-outline-variant overflow-hidden flex items-center justify-center">
+<!-- Stylized Route Grid Lines -->
+<div class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#0b1c30_1px,transparent_1px),linear-gradient(to_bottom,#0b1c30_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+<!-- Radiating Coverage Rings -->
+<div class="absolute w-72 h-72 rounded-full border border-primary/20 animate-pulse"></div>
+<div class="absolute w-96 h-96 rounded-full border border-primary/10"></div>
+<!-- Central Hub -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg ring-4 ring-primary/20">
+<span class="material-symbols-outlined text-[20px]" data-icon="hub">hub</span>
+</div>
+<span class="mt-1 px-2 py-0.5 rounded bg-inverse-surface text-inverse-on-surface text-label-sm font-label-sm shadow">CBD Central Depot</span>
+</div>
+<!-- Satellite Hub Pins -->
+<div class="absolute top-8 left-16 flex flex-col items-center">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-primary flex items-center justify-center text-primary shadow">
+<span class="material-symbols-outlined text-[14px]" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-[11px] font-bold text-on-surface bg-white/90 px-1 rounded shadow-sm mt-0.5">Brunswick • 15m</span>
+</div>
+<div class="absolute top-12 right-16 flex flex-col items-center">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-primary flex items-center justify-center text-primary shadow">
+<span class="material-symbols-outlined text-[14px]" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-[11px] font-bold text-on-surface bg-white/90 px-1 rounded shadow-sm mt-0.5">Richmond • 10m</span>
+</div>
+<div class="absolute bottom-10 right-20 flex flex-col items-center">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-primary flex items-center justify-center text-primary shadow">
+<span class="material-symbols-outlined text-[14px]" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-[11px] font-bold text-on-surface bg-white/90 px-1 rounded shadow-sm mt-0.5">Dandenong • 25m</span>
+</div>
+<div class="absolute bottom-12 left-14 flex flex-col items-center">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest border-2 border-primary flex items-center justify-center text-primary shadow">
+<span class="material-symbols-outlined text-[14px]" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-[11px] font-bold text-on-surface bg-white/90 px-1 rounded shadow-sm mt-0.5">Footscray • 12m</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Operational Hours: 7:00 AM – 8:00 PM (7 Days)</span>
+<span class="text-primary font-bold">Standard turnaround under 45 mins</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works: 3-Step Sequence -->
+<section class="py-space-xl bg-surface" id="how-it-works">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop">
+<div class="text-center max-w-2xl mx-auto mb-space-xl">
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider font-bold">Simple 3-Step Process</span>
+<h2 class="text-headline-xl font-headline-xl text-on-surface mt-1">Zero Friction From Request to Delivery</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-2">
+          Skip lengthy truck rental contracts, deposit bonds, and confusing fuel policies.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg relative">
+<!-- Connecting Line for Desktop -->
+<div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-outline-variant -z-0"></div>
+<!-- Step 1 -->
+<div class="relative bg-surface-container-lowest rounded-xl border border-outline-variant p-6 text-center z-10 shadow-sm hover:shadow transition-shadow">
+<div class="w-14 h-14 rounded-full bg-primary text-on-primary font-headline-md font-headline-md flex items-center justify-center mx-auto mb-4 ring-8 ring-surface-container">
+            1
+          </div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Request Quote or Postcodes</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+            Tell us your pickup and delivery locations along with item sizing via WhatsApp or our 60-second web tool.
+          </p>
+<span class="inline-block mt-4 text-label-sm font-label-sm px-2.5 py-1 rounded bg-surface-container text-on-surface-variant">
+            Takes ~60 seconds
+          </span>
+</div>
+<!-- Step 2 -->
+<div class="relative bg-surface-container-lowest rounded-xl border border-outline-variant p-6 text-center z-10 shadow-sm hover:shadow transition-shadow">
+<div class="w-14 h-14 rounded-full bg-primary text-on-primary font-headline-md font-headline-md flex items-center justify-center mx-auto mb-4 ring-8 ring-surface-container">
+            2
+          </div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Guaranteed Fixed Price in 5 Mins</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+            Receive a fixed, binding rate without surprises. Approve directly on your mobile device to allocate your driver.
+          </p>
+<span class="inline-block mt-4 text-label-sm font-label-sm px-2.5 py-1 rounded bg-surface-container text-on-surface-variant">
+            No Hidden Fees
+          </span>
+</div>
+<!-- Step 3 -->
+<div class="relative bg-surface-container-lowest rounded-xl border border-outline-variant p-6 text-center z-10 shadow-sm hover:shadow transition-shadow">
+<div class="w-14 h-14 rounded-full bg-primary text-on-primary font-headline-md font-headline-md flex items-center justify-center mx-auto mb-4 ring-8 ring-surface-container">
+            3
+          </div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Door-to-Door Delivery</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+            Driver arrives equipped with dollies, blankets, and straps. Live status tracking sent directly to your phone.
+          </p>
+<span class="inline-block mt-4 text-label-sm font-label-sm px-2.5 py-1 rounded bg-surface-container text-on-surface-variant">
+            Insured &amp; Complete
+          </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Fleet & Capacity Specs (About MoveMate Hardware) -->
+<section class="py-space-xl bg-surface-container-low border-y border-outline-variant/60" id="fleet">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider font-bold">Standardized Vehicle Fleet</span>
+<h2 class="text-headline-xl font-headline-xl text-on-surface mt-1">High-Spec Vehicles Ready for Heavy Hauls</h2>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md mt-2 md:mt-0">
+          Clean, late-model utility transport engineered specifically for suburban tight access and apartment clearance.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Fleet Item 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-6 border-b border-outline-variant/60">
+<span class="px-2.5 py-1 rounded bg-surface-container text-label-sm font-label-sm text-on-surface-variant">Fast Courier Run</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-2">1-Tonne Open Tray Ute</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">Ideal for timber, single mattresses, garden items, and fast hardware pickups.</p>
+</div>
+<div class="p-6 bg-surface-container-lowest space-y-2.5 text-body-sm font-body-sm">
+<div class="flex justify-between py-1 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">Max Payload:</span>
+<span class="font-bold text-on-surface">1,050 kg</span>
+</div>
+<div class="flex justify-between py-1 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">Tray Dimensions:</span>
+<span class="font-bold text-on-surface">2.4m L x 1.8m W</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Tight Parking:</span>
+<span class="font-bold text-primary">Car park friendly (&lt;2.0m)</span>
+</div>
+</div>
+</div>
+<!-- Fleet Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl border-2 border-primary overflow-hidden shadow-sm relative">
+<div class="absolute top-0 right-0 bg-primary text-on-primary text-[10px] font-bold px-3 py-1 rounded-bl-lg tracking-wider">
+            MOST POPULAR
+          </div>
+<div class="p-6 border-b border-outline-variant/60">
+<span class="px-2.5 py-1 rounded bg-primary/10 text-label-sm font-label-sm text-primary font-bold">All-Weather Enclosed</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-2">1.5-Tonne High-Roof Cargo Van</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">Full weather protection for living suites, commercial stock, and multi-piece moves.</p>
+</div>
+<div class="p-6 bg-surface-container-lowest space-y-2.5 text-body-sm font-body-sm">
+<div class="flex justify-between py-1 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">Cubic Volume:</span>
+<span class="font-bold text-on-surface">11.5 m³</span>
+</div>
+<div class="flex justify-between py-1 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">Cargo Length:</span>
+<span class="font-bold text-on-surface">3.3m Floor Length</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Standing Height:</span>
+<span class="font-bold text-primary">1.9m Walk-in internal</span>
+</div>
+</div>
+</div>
+<!-- Fleet Item 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-6 border-b border-outline-variant/60">
+<span class="px-2.5 py-1 rounded bg-surface-container text-label-sm font-label-sm text-on-surface-variant">Heavy Capacity</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-2">Tail-Lift Light Truck</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">Equipped with automated 500kg hydraulic platform for upright double-door fridges.</p>
+</div>
+<div class="p-6 bg-surface-container-lowest space-y-2.5 text-body-sm font-body-sm">
+<div class="flex justify-between py-1 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">Max Payload:</span>
+<span class="font-bold text-on-surface">2,200 kg</span>
+</div>
+<div class="flex justify-between py-1 border-b border-outline-variant/40">
+<span class="text-on-surface-variant">Hydraulic Lift:</span>
+<span class="font-bold text-on-surface">500 kg Rated Platform</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Cubic Volume:</span>
+<span class="font-bold text-primary">18.5 m³ Enclosed Box</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Gear Checklist Pill Strip -->
+<div class="mt-space-lg p-4 bg-surface-container-lowest rounded-xl border border-outline-variant flex flex-wrap items-center justify-between gap-4">
+<span class="text-label-md font-label-md text-on-surface font-bold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="construction">construction</span> Included Free With Every Booking:
+        </span>
+<div class="flex flex-wrap items-center gap-3">
+<span class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="check">check</span> 350kg Heavy Appliance Dolly
+          </span>
+<span class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="check">check</span> Quilted Moving Blankets (x6)
+          </span>
+<span class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="check">check</span> Commercial Ratchet Straps (x4)
+          </span>
+<span class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="check">check</span> Stretch Shrink Wrap Roll
+          </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Direct Dispatch & Rapid Quote Booking Form -->
+<section class="py-space-xl bg-surface" id="dispatch-form">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- Left: Direct Channels & Operational Guarantee -->
+<div class="lg:col-span-5 space-y-space-md">
+<div>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider font-bold">Fast-Track Response</span>
+<h2 class="text-headline-xl font-headline-xl text-on-surface mt-1">Direct Dispatch Hotline</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-2">
+            Speak directly with an active controller who can assign the closest driver unit immediately.
+          </p>
+</div>
+<!-- Clickable Contact Cards -->
+<div class="space-y-3">
+<a class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary flex items-center justify-between group transition-all" href="tel:0400123456">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline">PRIMARY DISPATCH NUMBER</p>
+<p class="text-headline-md font-headline-md text-on-surface">0400 123 456</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant hover:border-primary-container flex items-center justify-between group transition-all" href="https://wa.me/0400123456">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary-container group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-outline">WHATSAPP DIRECT CHAT</p>
+<p class="text-headline-md font-headline-md text-on-surface">Instant Photo / Quote Review</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Schedule Card -->
+<div class="p-5 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<h4 class="text-headline-sm font-headline-sm text-on-surface mb-2">Operating Hours &amp; Head Depot</h4>
+<ul class="space-y-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<li class="flex justify-between">
+<span>Monday – Sunday:</span>
+<span class="font-bold text-on-surface">6:00 AM – 10:00 PM</span>
+</li>
+<li class="flex justify-between">
+<span>Public Holidays:</span>
+<span class="font-bold text-on-surface">Standard Schedule (No Surcharge)</span>
+</li>
+<li class="flex justify-between">
+<span>Central Fleet Depot:</span>
+<span class="font-bold text-on-surface">Richmond Logistics Sector, VIC</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Right: 60-Second Quick Dispatch Form -->
+<div class="lg:col-span-7">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-lg shadow-sm">
+<div class="mb-space-md">
+<h3 class="text-headline-lg font-headline-lg text-on-surface">Submit Dispatch Request</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Get a binding fixed rate sent straight to your phone within 5 minutes.</p>
+</div>
+<form action="#" class="space-y-4" onsubmit="event.preventDefault();">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Your Full Name</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="e.g. Sarah Jenkins" type="text"/>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Mobile Contact Number</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="0400 000 000" type="tel"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Pickup Suburb &amp; Access</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="e.g. Richmond (Ground Floor)" type="text"/>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Delivery Suburb &amp; Access</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="e.g. Brunswick (Elevator 3rd floor)" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Cargo Details / Items to Move</label>
+<textarea class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="Describe the items (e.g. 3-seat couch, French door fridge, dining table with 4 chairs)" rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Preferred Date / Time</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="Today ASAP or Select Date" type="text"/>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Helper Crew Required</label>
+<select class="w-full px-4 py-2.5 rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none bg-surface-container-lowest">
+<option>1 Driver + Customer Assists (Most Economical)</option>
+<option>2 Drivers (Full Service - Zero Lifting for You)</option>
+</select>
+</div>
+</div>
+<button class="w-full h-[52px] rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg transition-all duration-200 shadow-sm flex items-center justify-center gap-2 active:scale-[0.99] mt-2" type="submit">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+<span>Send Enquiry &amp; Get 5-Min Quote</span>
+</button>
+<p class="text-center text-label-sm font-label-sm text-outline">
+              🔒 Privacy Guaranteed. No marketing spam. Direct logistics quotes only.
+            </p>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Comprehensive Desktop Footer (From Shared Components JSON) -->
+<footer class="bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline">
+<div class="max-w-[1200px] mx-auto px-gutter-desktop py-space-xl w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl border-b border-outline-variant/60">
+<!-- Brand Summary Column -->
+<div class="lg:col-span-2 space-y-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface font-extrabold tracking-tight">MoveMate PikUp</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant max-w-sm">
+            Friction-free local transport and pickup dispatch. Real-time rates, verified drivers, and careful handling for urban logistics.
+          </p>
+<div class="pt-2 flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 text-label-sm font-label-sm text-primary dark:text-inverse-primary bg-primary/10 dark:bg-inverse-surface px-2.5 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+              Live Dispatch Status: Online
+            </span>
+</div>
+</div>
+<!-- Navigation Cluster 1 -->
+<div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mb-3">Services</h4>
+<ul class="space-y-2 text-body-md font-body-md">
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#services">Services</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#fleet">Vehicle Fleet</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#areas">Areas Served</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#how-it-works">Pricing Matrix</a></li>
+</ul>
+</div>
+<!-- Navigation Cluster 2 -->
+<div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mb-3">Operations</h4>
+<ul class="space-y-2 text-body-md font-body-md">
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#fleet">Safety &amp; Insurance</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#dispatch-form">Driver Portal</a></li>
+<li><span class="text-on-surface-variant dark:text-surface-variant">Operating Hours (6am - 10pm)</span></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#areas">Live Dispatch Status</a></li>
+</ul>
+</div>
+<!-- Navigation Cluster 3 -->
+<div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mb-3">Legal</h4>
+<ul class="space-y-2 text-body-md font-body-md">
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors duration-150" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<!-- Footer Bottom String -->
+<div class="pt-space-lg flex flex-col md:flex-row items-center justify-between text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant gap-4">
+<p>© 2025 MoveMate PikUp Technologies Inc. Local Transport &amp; Friction-Free Dispatch. All rights reserved.</p>
+<div class="flex items-center gap-4 text-label-md font-label-md">
+<a class="text-primary dark:text-inverse-primary hover:underline" href="#home">Back to top</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
