@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="text-xs text-emerald-700 mt-0.5">Vehicles are stationed live in Bokaro & Dhanbad. Average driver arrival <strong>20–35 minutes</strong>. Deliveries available locally or to ANY destination across Jharkhand, Bihar, and West Bengal.</p>
             </div>
           </div>
-          <a href="https://wa.me/${config.business?.whatsappNumber || '919113182205'}?text=${encodeURIComponent('Namaste MoveMate! I need a live pickup in ' + postcodeInput.value.trim() + '. Please share driver arrival time and quote.')}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
+          <a href="https://wa.me/${config.business?.whatsappNumber || '919876543210'}?text=${encodeURIComponent('Namaste MoveMate! I need a live pickup in ' + postcodeInput.value.trim() + '. Please share driver arrival time and quote.')}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
             <span class="material-symbols-outlined text-[16px]">chat</span>
             <span>Book Live Driver</span>
           </a>
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="text-xs text-blue-700 mt-0.5">We pick up from Bokaro & Dhanbad and deliver directly to <strong>${postcodeInput.value.trim()}</strong>. Same-day to nearby districts (Asansol, Ranchi, Durgapur, Purulia) and express overnight statewide.</p>
             </div>
           </div>
-          <a href="https://wa.me/${config.business?.whatsappNumber || '919113182205'}?text=${encodeURIComponent('Namaste MoveMate! I want to transport goods from Bokaro/Dhanbad to ' + postcodeInput.value.trim() + '. Please provide your flat rate quote.')}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
+          <a href="https://wa.me/${config.business?.whatsappNumber || '919876543210'}?text=${encodeURIComponent('Namaste MoveMate! I want to transport goods from Bokaro/Dhanbad to ' + postcodeInput.value.trim() + '. Please provide your flat rate quote.')}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
             <span class="material-symbols-outlined text-[16px]">chat</span>
             <span>Get Route Quote</span>
           </a>
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="text-xs text-amber-700 mt-0.5">Our live pickup fleet is stationed in <strong>Bokaro and Dhanbad</strong>, delivering anywhere within <strong>Jharkhand, Bihar, and West Bengal</strong>. If your move originates in Bokaro/Dhanbad, message us directly!</p>
             </div>
           </div>
-          <a href="https://wa.me/${config.business?.whatsappNumber || '919113182205'}?text=${encodeURIComponent('Hi MoveMate, I have a pickup enquiry involving ' + postcodeInput.value.trim() + '. Can you check feasibility?')}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
+          <a href="https://wa.me/${config.business?.whatsappNumber || '919876543210'}?text=${encodeURIComponent('Hi MoveMate, I have a pickup enquiry involving ' + postcodeInput.value.trim() + '. Can you check feasibility?')}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
             <span class="material-symbols-outlined text-[16px]">chat</span>
             <span>Ask Dispatch</span>
           </a>
